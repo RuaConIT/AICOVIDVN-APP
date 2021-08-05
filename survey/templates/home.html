@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/start.js' %}"></script>
+</head>
+
+<body id='bg' style="background-image: url('{% static 'img/cough.jpg' %}');">
+
+    <form method="POST" class="post_form">
+        {% csrf_token %}
+        <h1>Giúp chúng tôi kiểm tra tiếng ho của bạn</h1>
+
+        <div class='main'>
+            <h3>
+                <i>Áp dụng:</i> Bệnh nhân thuộc diện F1, F2, F3
+            </h3>
+            <p><i><u>Hướng dẫn:</u></i> Bạn sẽ có tối đa khoảng 7s để thực hiện ghi âm tiếng ho.<br>
+                Tiếng ho
+                phải đảm bảo hoàn toàn tự nhiên
+                và tuyệt đối không tự ý cố tình ho.
+            </p>
+            <h3>Xác nhận thông tin</h3>
+            {{form.as_p}}
+            <img src="{% static 'img/recoder.png' %}" alt="recoder" width="10%" style="margin-top: 1%;">
+            <button class="button">Bắt đầu thu âm</button>
+            <div class="loader">
+                <div class="check">
+                    <span class="check-one"></span>
+                    <span class="check-two"></span>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body id='bg' style="background-image: url('{% static 'img/cough.jpg' %}');">
+    <div class="main">
+        {% if y_predict == 1 %}
+        <audio autoplay preload="auto" loop>
+            <source src="{% static 'audio/warning.wav' %}" type="audio/mp3" />
+        </audio>
+        <img src="{% static 'img/warning.gif' %}" width="30%">
+        <h1 class='resultview' style="color: red;">Bạn đã bị dương tính, vui lòng liên hệ 1900-08-39
+            <p style="text-align: center; color: aliceblue;">----------------------------</p>
+        </h1>
+
+        {% else %}
+        <audio autoplay preload="auto" loop>
+            <source src="{% static 'audio/happy.wav' %}" type="audio/mp3" />
+        </audio>
+        <img src="{% static 'img/happy.gif' %}" width="30%">
+        <h1 class='resultview'>Bạn không có dâu hiện Covid, vui lòng cẩn thận
+            <p style="text-align: center; color: aliceblue;">----------------------------</p>
+        </h1>
+
+        {% endif %}
+    </div>
+</body>
+
+</html>
