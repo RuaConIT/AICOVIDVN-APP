@@ -1,24 +1,10 @@
-import os
+import sounddevice
+import multiprocessing
 
+def record():
+    audio_cough = sounddevice.rec(int(7 * 44100), samplerate=44100, channels=2)
+    sounddevice.wait()
+    return audio_cough
 
-def child():
-    print('\nA new child ', os.getpid())
-    os._exit(0)
-
-
-def parent():
-    while True:
-        newpid = os.fork()
-        if newpid == 0:
-            child()
-        else:
-            pids = (os.getpid(), newpid)
-            print("parent: %d, child: %d\n" % pids)
-        reply = input("q for quit / c for new fork")
-        if reply == 'c':
-            continue
-        else:
-            break
-
-
-parent()
+p = multiprocessing.Process(target=record)
+p.start()

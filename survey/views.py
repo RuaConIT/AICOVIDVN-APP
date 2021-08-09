@@ -13,24 +13,35 @@ import numpy as np
 from survey.forms import SurveyForm
 from survey.models import Survey
 import uuid
+import os
+from multiprocessing import Queue
+import multiprocessing
 
 
 def home(request):
     if request.method == 'POST':
         audio_file = record(request)
-        survey = SurveyForm(request.POST)
-        if survey.is_valid():
-            obj = survey.save(commit=False)
-            filename = str(uuid.uuid4())
-            write('record/%s.wav' % filename, 44100, audio_file)
-            obj.uuid = filename
-            obj.audio_path = filename + '.wav'
-            obj.save()
-            return render(request, 'record.html', {'uuid_id': filename})
+        def create(request, q):
+            survey = SurveyForm(request.POST)
+            if survey.is_valid():
+                obj = survey.save(commit=False)
+                filename = str(uuid.uuid4())
+                write('record/%s.wav' % filename, 44100, audio_file)
+                obj.uuid = filename
+                obj.audio_path = filename + '.wav'
+                obj.save()
+                q.put(filename)
+        q = Queue() 
+        pool = multiprocessing.Process(target=create, args=[request, q])
+        pool.start()
+        pool.join()
+        return render(request, 'record.html', {'uuid_id': q.get()})
+        
     else:
         survey = SurveyForm()
         return render(request, 'home.html', {'form': survey})
 
+    
 
 def calculator(data: AudioData, **librosa_mfcc_kwargs) -> AudioData:
     result = []
