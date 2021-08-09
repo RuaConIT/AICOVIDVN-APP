@@ -38,7 +38,7 @@ def home(request):
         return render(request, 'record.html', {'uuid_id': q.get()})
         
     else:
-        survey = SurveyForm()
+        survey = SurveyForm() 
         return render(request, 'home.html', {'form': survey})
 
     
