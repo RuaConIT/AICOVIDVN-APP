@@ -17,12 +17,13 @@ import os
 from multiprocessing import Queue
 import multiprocessing
 
-
+q = Queue() 
 def home(request):
     if request.method == 'POST':
         audio_file = record(request)
 
         def create(request, q):
+<<<<<<< HEAD
             survey = SurveyForm(request.POST)
             if survey.is_valid():
                 obj = survey.save(commit=False)
@@ -39,6 +40,24 @@ def home(request):
         pool.join()
         return render(request, 'record.html', {'uuid_id': q.get()})
 
+=======
+            for i in request:
+                survey = SurveyForm(i.POST)
+                if survey.is_valid():
+                    obj = survey.save(commit=False)
+                    filename = str(uuid.uuid4())
+                    write('record/%s.wav' % filename, 44100, audio_file)
+                    obj.uuid = filename
+                    obj.audio_path = filename + '.wav'
+                    obj.save()
+                    q.put(filename)
+        pool = multiprocessing.Process(target=create, args=([request], q))
+        pool.start()
+        pool.join()
+        while q.empty() is False:
+            return render(request, 'record.html', {'uuid_id': q.get()})
+        
+>>>>>>> 5d1e0eacce6b2c23bff3bb237684a09d3d436dbc
     else:
         survey = SurveyForm()
         return render(request, 'home.html', {'form': survey})
