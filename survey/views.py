@@ -17,10 +17,13 @@ import os
 from multiprocessing import Queue
 import multiprocessing
 
-q = Queue() 
+q = Queue()
+
+
 def home(request):
     if request.method == 'POST':
         audio_file = record(request)
+
         def create(request, q):
             for i in request:
                 survey = SurveyForm(i.POST)
@@ -32,17 +35,17 @@ def home(request):
                     obj.audio_path = filename + '.wav'
                     obj.save()
                     q.put(filename)
+
         pool = multiprocessing.Process(target=create, args=([request], q))
         pool.start()
         pool.join()
         while q.empty() is False:
             return render(request, 'record.html', {'uuid_id': q.get()})
-        
+
     else:
-        survey = SurveyForm() 
+        survey = SurveyForm()
         return render(request, 'home.html', {'form': survey})
 
-    
 
 def calculator(data: AudioData, **librosa_mfcc_kwargs) -> AudioData:
     result = []
