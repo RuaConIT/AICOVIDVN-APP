@@ -7,22 +7,10 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-# RUN python3 import os
-# RUN os.system("sudo apt-get install --reinstall alsa-base pulseaudio")
-# RUN os.system("sudo alsa force-reload")
-# RUN pip3 install pulseaudio
-# RUN apt-get install build-essential -y
-# RUN apt-get install alsa-utils -y
-# RUN alsa force-reload
-#     apt-get -y install sudo
-# RUN apt-get update && apt-get upgrade
-# RUN apt-get install libasound2 alsa-utils alsa-oss -y
-# RUN alsamixer
-
-RUN apt-get update
-RUN apt-get install -y pulseaudio socat
-RUN apt-get install -y alsa-utils
+RUN apt-get update -y
+RUN apt-get install -y libasound2-dev portaudio19-dev libportaudio2 libportaudiocpp0 
 RUN apt-get install -y ffmpeg
-RUN pulseaudio -D --exit-idle-time=-1
+RUN apt-get install -y python-pyaudio
+RUN apt purge timidity-daemon
 
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
