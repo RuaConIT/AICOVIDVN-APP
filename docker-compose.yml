@@ -1,10 +1,13 @@
 version: '3'
 
 services: 
-  web:
+  django_covid:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
     volumes: 
       - .:/app
     ports: 
-      - "8000:8000"
+      - 8000:8000
+    image: django_covid:latest
+    container_name: django_container
+
+    command: python manage.py runserver 0.0.0.0:8000

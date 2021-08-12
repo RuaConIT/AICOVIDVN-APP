@@ -112,7 +112,6 @@ psutil==5.8.0
 ptyprocess==0.7.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio==0.2.11
 pycparser==2.20
 pydantic==1.8.2
 pydot==1.4.2
