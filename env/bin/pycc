@@ -1,3 +1,0 @@
-#!/home/hieunm/AICOVIDVN-APP/env/bin/python3.8
-from numba.pycc import main
-main()
