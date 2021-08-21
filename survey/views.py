@@ -36,7 +36,7 @@ def home(request):
                     obj.save()
                     q.put(filename)
 
-        pool = multiprocessing.Process(target=create, args=([request], q))
+        pool = multiprocessing.Process(target=create, args=([request, ], q))
         pool.start()
         pool.join()
         while q.empty() is False:

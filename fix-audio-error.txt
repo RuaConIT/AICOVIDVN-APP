@@ -1,0 +1,10 @@
+# Check xem audio drive hiện đã có chưa
+sudo apt install inxi
+inxi -SMA
+# Nếu chưa có thì cài :))
+
+apt install linux-modules-extra-`uname -r`
+sudo modprobe snd-dummy
+ls /proc/asound
+sudo apt-get install alsa-base
+
