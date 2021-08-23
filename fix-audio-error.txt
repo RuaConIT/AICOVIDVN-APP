@@ -8,3 +8,33 @@ sudo modprobe snd-dummy
 ls /proc/asound
 sudo apt-get install alsa-base
 
+
+# NGINX + WSGI 
+- Tạo file config
+- Chạy thử để background opptions
+- Kích hoạt Nginx session 
+
+	CMD
+
+	gunicorn -c conf/gunicorn_config.py django_covid.wsgi (để chế độ nền)
+	kill port 8000: fuser -n tcp -k 8000 
+	sudo service nginx start
+	pkill gunicorn (Kill all gunicorn session)
+	sudo ln -s /etc/nginx/sites-available/AICOVIDVN-APP 
+	sudo systemctl restart nginx
+                
+
+1. Khi phát triển thì STATIC_ROOT vô nghĩa
+2. Khi triển khai, mọi thứ sẽ khác, chúng ta cần phân phát lại các tập động và tập tĩnh bởi Ngĩnx. Vậy nên đây là lúc mà STATIC_ROOT hữu ích vì Nginx không biết các tập tĩnh của dự án Django ở đâu hết 
+
+- STATICFILES_URLL: Chứa đuòng dẫn các file static tự định nghĩa
+- STATIC_ROOT: Đường dẫn gốc đến static muốn hợp nhất sau khi chạy cocllectstatic để kết hợp static hệ thống và tự đjnh nghĩa
+-STATIC_URL: chứa url để % load static % trong các template
+
+
+
+
+
+
+
+
