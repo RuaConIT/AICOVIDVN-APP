@@ -119,19 +119,24 @@ USE_TZ = True
 
 
 # --------------- DEVELOPEMT
+# STATICFILES_DIRS = [
+#     "/var/www/static/",
+# ]
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-# STATIC_ROOT = '/home/hieunm/AICOVIDVN-APP/static/'
-STATIC_URL = '/static/'
+# # STATIC_ROOT = '/home/hieunm/AICOVIDVN-APP/static/'
 
+# STATIC_URL = '/static/'
 
 
 # --------------- PRODUCT
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR / 'static'
+
+STATICFILES_DIRS = [
+'/home/AICOVIDVN-APP/static/'
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
 
 
 # Default primary key field type

@@ -17,7 +17,7 @@ sudo apt-get install alsa-base
 	CMD
 
 	gunicorn -c conf/gunicorn_config.py django_covid.wsgi (để chế độ nền)
-	kill port 8000: fuser -n tcp -k 8000 
+	kill port 8000: sudo fuser -k 8000/tcp 
 	sudo service nginx start
 	pkill gunicorn (Kill all gunicorn session)
 	sudo ln -s /etc/nginx/sites-available/AICOVIDVN-APP 
@@ -30,6 +30,17 @@ sudo apt-get install alsa-base
 - STATICFILES_URLL: Chứa đuòng dẫn các file static tự định nghĩa
 - STATIC_ROOT: Đường dẫn gốc đến static muốn hợp nhất sau khi chạy cocllectstatic để kết hợp static hệ thống và tự đjnh nghĩa
 -STATIC_URL: chứa url để % load static % trong các template
+
+----- BEFORE
+STATICFILES_DIRS = [
+'/home/hieunm/AICOVIDVN-APP/static/'
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+----- AFTER
+STATIC_ROOT = '/home/hieunm/AICOVIDVN-APP/static/'
+STATIC_URL = '/static/'
 
 
 
